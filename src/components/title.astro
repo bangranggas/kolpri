@@ -1,0 +1,12 @@
+---
+const {word, color, hideTitle} = Astro.props
+---
+
+<div class=`container mt-4 ${hideTitle}`>
+    <div
+      class=`alert alert-${color} d-flex align-items-center justify-content-center`
+      role="alert"
+    >
+      <h4 class="alert-heading text-center">{word}</h4>
+    </div>
+  </div>

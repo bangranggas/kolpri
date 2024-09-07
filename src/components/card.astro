@@ -1,0 +1,12 @@
+---
+const {name, description, link, image} = Astro.props
+---
+
+<div class="card mb-4">
+    <img src=`https://raw.githubusercontent.com/bangranggas/webby/main/image/${image}.png`` class="card-img-top" alt=`${name}`>
+    <div class="card-body">
+        <h5 class="card-title">${name}</h5>
+        <p class="card-text">${description}</p>
+        <a href=`${link}`` target="_blank" class="btn btn-primary">Visit Now</a>
+    </div>
+</div>

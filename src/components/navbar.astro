@@ -1,0 +1,91 @@
+---
+const {whoActive} = Astro.props
+let [active1, active2, active3, active4, active5, active6, active7, active8] = new Array(8).fill("nav-link");
+
+if (whoActive == "home") {
+    active1 = "nav-link active"
+} else if (whoActive == "kategori1") {
+    active2 = "nav-link active"
+} else if (whoActive == "kategori2") {
+    active3 = "nav-link active"
+} else if (whoActive == "kategori3") {
+    active4 = "nav-link active"
+} else if (whoActive == "kategori4") {
+    active5 = "nav-link active"
+} else if (whoActive == "kategori5") {
+    active6 = "nav-link active"
+} else if (whoActive == "kategori6") {
+    active7 = "nav-link active"
+} else if (whoActive == "kategori7") {
+    active8 = "nav-link active"
+}
+---
+
+<nav class="navbar sticky-top navbar-expand-lg bg-primary fs-5" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a
+        class="navbar-brand"
+        href="#"
+        ><b>Webby 2.0</b></a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarNavAltMarkup"
+      >
+        <div class="navbar-nav">
+          <a
+            class={active1}
+            aria-current="page"
+            href="/"
+            >Home</a
+          >
+          <a
+            class={active2}
+            href="/kategori1"
+            >Showoff</a
+          >
+          <a
+            class={active3}
+            href="/kategori2"
+            >Nyep***</a
+          >
+          <a
+            class={active4}
+            href="/kategori3"
+            >Ngew*</a
+          >
+          <a
+            class={active5}
+            href="/kategori4"
+            >Pack</a
+          >
+          <a
+            class={active6}
+            href="/kategori5"
+            >Vira*</a
+          >
+          <a
+            class={active7}
+            href="/kategori6"
+            >Colm*</a
+          >
+          <a
+            class={active8}
+            href="/kategori7"
+            >Foto</a
+          >
+        </div>
+      </div>
+    </div>
+  </nav>

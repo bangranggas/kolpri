@@ -1,0 +1,116 @@
+---
+import Card from "../components/card.astro"
+import Navbar from "../components/navbar.astro"
+import Title from "../components/title.astro"
+
+const {active, titlePage, titleColor, hideTitle, dataTitle} = Astro.props
+const dataLink = "https://raw.githubusercontent.com/bangranggas/webby/main/data/data.json"
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+		<!-- Bootstrap CSS Link -->
+		<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+		crossorigin="anonymous"
+	  />
+	</head>
+	<body>
+		<Navbar whoActive={active} />
+		<Title word={titlePage} color={titleColor} hideTitle={hideTitle}/>
+		<slot>
+			<!-- konten dari luar -->
+		</slot>
+
+	
+	<script define:vars={{ dataLink, titlePage }}>
+		// Fungsi untuk menampilkan produk
+		function displayProducts(products) {
+        let productList;
+
+        products.forEach((product) => {
+          if (product.category == titlePage.toUpperCase()) {
+			productList = document.getElementById(product.category);
+			const productElement = document.createElement('div');
+			productElement.className = 'col-md-4';
+
+			productElement.innerHTML = `
+						<div class="card mb-4">
+							<img src="https://raw.githubusercontent.com/bangranggas/webby/main/image/${product.image}.png" class="card-img-top" alt="${product.name}">
+							<div class="card-body">
+								<h5 class="card-title">${product.name}</h5>
+								<p class="card-text">${product.description}</p>
+								<a href="${product.link}" target="_blank" class="btn btn-primary">Visit Now</a>
+							</div>
+						</div>
+					`;
+			productList.appendChild(productElement);
+		  } else if ((product.category == "NGOBROL" || product.category == "BERISIK" || product.category == "DIEM") && titlePage == "Ngew") {
+			productList = document.getElementById(product.category);
+			const productElement = document.createElement('div');
+			productElement.className = 'col-md-4';
+
+			productElement.innerHTML = `
+						<div class="card mb-4">
+							<img src="https://raw.githubusercontent.com/bangranggas/webby/main/image/${product.image}.png" class="card-img-top" alt="${product.name}">
+							<div class="card-body">
+								<h5 class="card-title">${product.name}</h5>
+								<p class="card-text">${product.description}</p>
+								<a href="${product.link}" target="_blank" class="btn btn-primary">Visit Now</a>
+							</div>
+						</div>
+					`;
+			productList.appendChild(productElement);
+		  } else if ((product.category == "PACK-NGEW" || product.category == "PACK-SHOW") && titlePage == "Pack") {
+			productList = document.getElementById(product.category);
+			const productElement = document.createElement('div');
+			productElement.className = 'col-md-4';
+
+			productElement.innerHTML = `
+						<div class="card mb-4">
+							<img src="https://raw.githubusercontent.com/bangranggas/webby/main/image/${product.image}.png" class="card-img-top" alt="${product.name}">
+							<div class="card-body">
+								<h5 class="card-title">${product.name}</h5>
+								<p class="card-text">${product.description}</p>
+								<a href="${product.link}" target="_blank" class="btn btn-primary">Visit Now</a>
+							</div>
+						</div>
+					`;
+			productList.appendChild(productElement);
+		  }
+
+		  
+        });
+      }
+
+      // Menggunakan Fetch API untuk mengambil data JSON
+      fetch(dataLink)
+        .then((response) => response.json())
+        .then((data) => {
+          displayProducts(data);
+        })
+        .catch((error) => console.error('Error fetching the products:', error));
+	</script>
+	<script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+      crossorigin="anonymous"
+    ></script>
+	</body>
+</html>
