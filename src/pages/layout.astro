@@ -53,7 +53,7 @@ const categorizedData = result.reduce((acc, item) => {
 	
 	<script define:vars={{ categorizedData, titlePage, secretKey }}>
 	let links = window.location.href.split('#')[1];
-	if (links != secretKey && titlePage != "Redirect") {
+	if (links != secretKey) {
 		window.location.href = "/kolpri/"
 	}	
 	
@@ -81,7 +81,7 @@ const categorizedData = result.reduce((acc, item) => {
         })
       } 
 	  
-	  if (titlePage != "Home" && titlePage != "Redirect") {
+	  if (titlePage != "Home") {
 		displayProducts(categorizedData);
 	  }
 	</script>
