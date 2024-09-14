@@ -1,0 +1,31 @@
+---
+import Layout from "./layout.astro";
+---
+
+<Layout  active="home" titlePage="Redirect" titleColor="danger" hideTitle="collapse">
+    <div class="d-flex justify-content-center m-4" >
+        <div class="card" style="width: 70vw">
+            <h5 class="card-header">Multiple Links</h5>
+            <div class="card-body">
+                <p class="card-text"><b><em>Ditemukan beberapa link, pilih salah satu !</em></b></p>
+                <div class="list-group"  id="productDiv">
+                    <!-- Otomatis add link disini -->
+                </div>
+            </div>
+          </div>
+    </div>
+</Layout>
+
+<script>
+    let links = window.location.href.split('#')[1].split(";");
+    links.forEach((p, index) =>{
+        const listDiv = document.getElementById("productDiv");
+        const listElement = document.createElement("div")
+
+        listElement.innerHTML = `
+            <a href="${p}" target="_blank" class="list-group-item list-group-item-action">Link ${index+1}</a>
+        `
+        listDiv.appendChild(listElement);
+    })
+
+</script>

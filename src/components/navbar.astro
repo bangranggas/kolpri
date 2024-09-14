@@ -1,5 +1,6 @@
 ---
 const {whoActive} = Astro.props
+const secretKey = "#anjaygaming"
 let [active1, active2, active3, active4, active5, active6, active7, active8] = new Array(8).fill("nav-link");
 
 if (whoActive == "home") {
@@ -46,43 +47,42 @@ if (whoActive == "home") {
         <div class="navbar-nav">
           <a
             class={active1}
-            aria-current="page"
-            href="/kolpri/"
+            href=`/kolpri/home${secretKey}`
             >Home</a
           >
           <a
             class={active2}
-            href="/kolpri/kategori1"
+            href=`/kolpri/kategori1${secretKey}`
             >Showoff</a
           >
           <a
             class={active3}
-            href="/kolpri/kategori2"
+            href=`/kolpri/kategori2${secretKey}`
             >Nyep***</a
           >
           <a
             class={active4}
-            href="/kolpri/kategori3"
+            href=`/kolpri/kategori3${secretKey}`
             >Ngew*</a
           >
           <a
             class={active5}
-            href="/kolpri/kategori4"
+            href=`/kolpri/kategori4${secretKey}`
             >Pack</a
           >
           <a
             class={active6}
-            href="/kolpri/kategori5"
+            href=`/kolpri/kategori5${secretKey}`
             >Vira*</a
           >
           <a
             class={active7}
-            href="/kolpri/kategori6"
+            href=`/kolpri/kategori6${secretKey}`
             >Colm*</a
           >
           <a
             class={active8}
-            href="/kolpri/kategori7"
+            href=`/kolpri/kategori7${secretKey}`
             >Foto</a
           >
         </div>
