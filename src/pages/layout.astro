@@ -4,8 +4,7 @@ import Title from "../components/title.astro"
 
 const secretKey = "anjaygaming"
 const {active, titlePage, titleColor, hideTitle} = Astro.props
-const timestamp = new Date().getTime();
-const response = await fetch(`https://raw.githubusercontent.com/bangranggas/webby/main/data/data.json?timestamp=${timestamp}`);
+const response = await fetch(`https://api.npoint.io/266ed554a847c3babb20/`);
 const result = await response.json();
 const categorizedData = result.reduce((acc, item) => {
 
