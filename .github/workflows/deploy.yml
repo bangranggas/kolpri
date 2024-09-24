@@ -37,9 +37,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        
-defaults:
-  - scope:
-      path: 'assets'
-    values:
-      cache-control: 'no-store'
