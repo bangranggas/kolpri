@@ -4,9 +4,9 @@ import Title from "../components/title.astro"
 
 const secretKey = "anjaygaming"
 const {active, titlePage, titleColor, hideTitle} = Astro.props
-const response = await fetch("https://raw.githubusercontent.com/bangranggas/webby/main/data/data.json");
+const timestamp = new Date().getTime();  // Timestamp saat ini untuk menghindari cache
+const response = await fetch(`https://raw.githubusercontent.com/bangranggas/webby/main/data/data.json?timestamp=${timestamp}`);
 const result = await response.json();
-
 const categorizedData = result.reduce((acc, item) => {
 
 	if (!acc["PACK"] && "PACK-NGEW PACK-SHOW".includes(item.category)) {
@@ -50,9 +50,8 @@ const categorizedData = result.reduce((acc, item) => {
 			<!-- konten dari luar -->
 		</slot>
 
-	
 	<script define:vars={{ categorizedData, titlePage, secretKey }}>
-	let links = window.location.href.split('#')[1];
+	let links = window.location.href.split('?')[1];
 	if (links != secretKey) {
 		window.location.href = "/kolpri/"
 	}	
