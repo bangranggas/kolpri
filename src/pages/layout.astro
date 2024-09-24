@@ -4,28 +4,9 @@ import Title from "../components/title.astro"
 
 const secretKey = "anjaygaming"
 const {active, titlePage, titleColor, hideTitle} = Astro.props
-const response = await fetch(`https://api.npoint.io/266ed554a847c3babb20/`);
+const timestamp = new Date().getTime();
+const response = await fetch(`https://raw.githubusercontent.com/bangranggas/webby/refs/heads/main/data/data.json?timestamp=${timestamp}`);
 const result = await response.json();
-const categorizedData = result.reduce((acc, item) => {
-
-	if (!acc["PACK"] && "PACK-NGEW PACK-SHOW".includes(item.category)) {
-			acc["PACK"] = [];
-		} else if (!acc["NGEW"] && "BERISIK DIEM NGOBROL".includes(item.category)) {
-			acc["NGEW"] = [];
-		} else if (!acc[item.category] && !"PACK-NGEW PACK-SHOW BERISIK DIEM NGOBROL".includes(item.category)) {
-			acc[item.category] = [];
-		}
-
-	if (item.category == "PACK-NGEW" || item.category == "PACK-SHOW") {
-			acc["PACK"].push(item);
-		} else if (item.category == "BERISIK" || item.category == "DIEM" || item.category == "NGOBROL") {
-			acc["NGEW"].push(item);
-		} else {
-			acc[item.category].push(item);
-		}
-	
-	return acc;
-}, {});
 ---
 <html lang="en">
 	<head>
@@ -49,7 +30,28 @@ const categorizedData = result.reduce((acc, item) => {
 			<!-- konten dari luar -->
 		</slot>
 
-	<script define:vars={{ categorizedData, titlePage, secretKey }}>
+	<script define:vars={{ result, titlePage, secretKey, timestamp }}>
+	const categorizedData = result.reduce((acc, item) => {
+
+if (!acc["PACK"] && "PACK-NGEW PACK-SHOW".includes(item.category)) {
+		acc["PACK"] = [];
+	} else if (!acc["NGEW"] && "BERISIK DIEM NGOBROL".includes(item.category)) {
+		acc["NGEW"] = [];
+	} else if (!acc[item.category] && !"PACK-NGEW PACK-SHOW BERISIK DIEM NGOBROL".includes(item.category)) {
+		acc[item.category] = [];
+	}
+
+if (item.category == "PACK-NGEW" || item.category == "PACK-SHOW") {
+		acc["PACK"].push(item);
+	} else if (item.category == "BERISIK" || item.category == "DIEM" || item.category == "NGOBROL") {
+		acc["NGEW"].push(item);
+	} else {
+		acc[item.category].push(item);
+	}
+
+return acc;
+}, {});
+	console.log(timestamp)
 	let links = window.location.href.split('?')[1];
 	if (links != secretKey) {
 		window.location.href = "/kolpri/"
@@ -67,7 +69,7 @@ const categorizedData = result.reduce((acc, item) => {
 
 			productElement.innerHTML = `
 						<div class="card mb-4">
-							<img src="https://raw.githubusercontent.com/bangranggas/webby/main/image/${product.image}.png" class="card-img-top" alt="${product.name}">
+							<img src="https://raw.githubusercontent.com/bangranggas/webby/main/test/${product.image}.png" class="card-img-top" alt="${product.name}">
 							<div class="card-body">
 								<h5 class="card-title">${product.name}</h5>
 								<p class="card-text">${product.description}</p>
