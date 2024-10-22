@@ -1,0 +1,69 @@
+---
+import Layout from "./layout.astro";
+---
+
+<Layout  active="video" titlePage="Video Mov Player" titleColor="primary">
+    <body class="bg-light">
+        <div class="container mt-1">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="input-group mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="videoInput"
+                  placeholder="Masukkan URL video"
+                />
+                <button
+                  class="btn btn-primary"
+                  id="showVideoButton"
+                  type="button"
+                >
+                  Tampilkan Video
+                </button>
+              </div>
+      
+              <!-- Tempat untuk menampilkan error -->
+              <p id="errorMsg" class="text-danger text-center"></p>
+      
+              <!-- Video player -->
+              <div class="ratio ratio-16x9 mb-4">
+                <video id="videoPlayer" controls>
+                  <source id="videoSource" src="" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Move JavaScript to the bottom of the page -->
+        <script>
+          // Add an event listener to the button
+          document.getElementById("showVideoButton").addEventListener("click", function() {
+            const videoSource = document.getElementById("videoSource") as HTMLSourceElement;
+            const videoPlayer = document.getElementById("videoPlayer") as HTMLVideoElement;
+            const videoLink = (document.getElementById("videoInput") as HTMLInputElement).value;
+      
+            videoSource.src = videoLink;
+            videoPlayer.load(); // Reload video with the new source
+      
+            // Clear previous error message
+            document.getElementById("errorMsg")!.textContent = "";
+          });
+      
+          // Handle video load errors
+          window.onload = function() {
+            const videoPlayer = document.getElementById("videoPlayer") as HTMLVideoElement;
+      
+            videoPlayer.onerror = function() {
+              const errorMessage = "Gagal memuat video. Periksa kembali URL atau jaringan Anda.";
+              document.getElementById("errorMsg")!.textContent = errorMessage;
+            };
+          };
+        </script>
+      
+        <!-- Link Bootstrap JS (optional but recommended for Bootstrap components) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+      </body>
+</Layout>

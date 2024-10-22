@@ -1,7 +1,7 @@
 ---
 const {whoActive} = Astro.props
 const secretKey = "?anjaygaming"
-let [active1, active2, active3, active4, active5, active6, active7, active8] = new Array(8).fill("nav-link");
+let [active1, active2, active3, active4, active5, active6, active7, active8, active9] = new Array(9).fill("nav-link");
 
 if (whoActive == "home") {
     active1 = "nav-link active"
@@ -19,6 +19,8 @@ if (whoActive == "home") {
     active7 = "nav-link active"
 } else if (whoActive == "kategori7") {
     active8 = "nav-link active"
+} else if (whoActive == "video") {
+    active9 = "nav-link active"
 }
 ---
 
@@ -85,6 +87,10 @@ if (whoActive == "home") {
             href=`/kolpri/kategori7${secretKey}`
             >Foto</a
           >
+          <a
+            class={active9}
+            href=`/kolpri/video${secretKey}`
+            >Video</a>
         </div>
       </div>
     </div>
