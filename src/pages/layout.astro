@@ -62,6 +62,9 @@ return acc;
 			let productLists = products[titlePage.toUpperCase()];
 			let productDiv;
 
+			// Mengacak urutan produk menggunakan sort dan Math.random
+			productLists.sort(() => Math.random() - 0.5);
+			
 			productLists.forEach((product) => {
 			productDiv = document.getElementById(product.category);
 			const productElement = document.createElement('div');
