@@ -25,9 +25,10 @@
         links.forEach((p, index) =>{
             const listDiv = document.getElementById("productDiv");
             const listElement = document.createElement("div")
+            const hostname = new URL(p).hostname;
     
             listElement.innerHTML = `
-                <a href="${p}" target="_blank" class="list-group-item list-group-item-action">Link ${index+1}</a>
+                <a href="${p}" target="_blank" class="list-group-item list-group-item-action">Link ${index+1} : ${hostname}</a>
             `
             listDiv.appendChild(listElement);
         })
