@@ -4,18 +4,14 @@ import Title from "../components/title.astro"
 
 const secretKey = "anjaygaming"
 const {active, titlePage, titleColor, hideTitle} = Astro.props
-
-async function fetchData() {
-  const response = await fetch(`https://bangranggas.github.io/kolpri/api/data`);
-  const result = await response.json();
-  return result;
-}
-
-let result = await fetchData();
-
-setInterval(async () => {
-  result = await fetchData();
-}, 60000); // Memeriksa setiap 60 detik
+const response = await fetch("https://api.jsonbin.io/v3/b/6726098ae41b4d34e44d071a?meta=false", {
+  headers: {
+    "X-Access-Key": "$2a$10$dR/C/OfHxtAGKnjVVVo89e6.S6dv0F0Zvv3DWnx5U/gYvi2w0M.rO",
+    "Content-Type": "application/json"
+  }
+});
+const result = await response.json();
+console.log(result)
 ---
 <html lang="en">
 	<head>
