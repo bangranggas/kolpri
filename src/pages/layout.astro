@@ -4,9 +4,6 @@ import Title from "../components/title.astro"
 
 const secretKey = "anjaygaming"
 const {active, titlePage, titleColor, hideTitle} = Astro.props
-const timestamp = new Date().getTime();
-const response = await fetch(`https://bangranggas.github.io/kolpri/api/data.json`);
-const result = await response.json();
 ---
 <html lang="en">
 	<head>
@@ -30,7 +27,9 @@ const result = await response.json();
 			<!-- konten dari luar -->
 		</slot>
 
-	<script define:vars={{ result, titlePage, secretKey}}>
+	<script define:vars={{ titlePage, secretKey}}>
+	const response = await fetch(`https://bangranggas.github.io/kolpri/api/data.json`);
+	const result = await response.json();
 	const categorizedData = result.reduce((acc, item) => {
 
 if (!acc["PACK"] && "PACK-NGEW PACK-SHOW".includes(item.category)) {
