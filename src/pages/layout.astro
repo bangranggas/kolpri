@@ -27,35 +27,40 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 			<!-- konten dari luar -->
 		</slot>
 
-	<script define:vars={{ titlePage, secretKey}}>
-	const response = await fetch(`https://bangranggas.github.io/kolpri/api/data.json`);
-	const result = await response.json();
-	const categorizedData = result.reduce((acc, item) => {
+	<script type="module" define:vars={{ titlePage, secretKey }}>
+	async function fetchAndDisplayProducts() {
+		// Mengambil data dari API
+		const response = await fetch(`https://raw.githubusercontent.com/bangranggas/webby/refs/heads/main/data/data.json`);
+		const result = await response.json();
 
-if (!acc["PACK"] && "PACK-NGEW PACK-SHOW".includes(item.category)) {
-		acc["PACK"] = [];
-	} else if (!acc["NGEW"] && "BERISIK DIEM NGOBROL".includes(item.category)) {
-		acc["NGEW"] = [];
-	} else if (!acc[item.category] && !"PACK-NGEW PACK-SHOW BERISIK DIEM NGOBROL".includes(item.category)) {
-		acc[item.category] = [];
-	}
+		// Mengelompokkan data berdasarkan kategori
+		const categorizedData = result.reduce((acc, item) => {
+			if (!acc["PACK"] && "PACK-NGEW PACK-SHOW".includes(item.category)) {
+				acc["PACK"] = [];
+			} else if (!acc["NGEW"] && "BERISIK DIEM NGOBROL".includes(item.category)) {
+				acc["NGEW"] = [];
+			} else if (!acc[item.category] && !"PACK-NGEW PACK-SHOW BERISIK DIEM NGOBROL".includes(item.category)) {
+				acc[item.category] = [];
+			}
 
-if (item.category == "PACK-NGEW" || item.category == "PACK-SHOW") {
-		acc["PACK"].push(item);
-	} else if (item.category == "BERISIK" || item.category == "DIEM" || item.category == "NGOBROL") {
-		acc["NGEW"].push(item);
-	} else {
-		acc[item.category].push(item);
-	}
+			if (item.category == "PACK-NGEW" || item.category == "PACK-SHOW") {
+				acc["PACK"].push(item);
+			} else if (item.category == "BERISIK" || item.category == "DIEM" || item.category == "NGOBROL") {
+				acc["NGEW"].push(item);
+			} else {
+				acc[item.category].push(item);
+			}
 
-return acc;
-}, {});
-	let links = window.location.href.split('?')[1];
-	if (links != secretKey) {
-		window.location.href = "/kolpri/"
-	}	
-	
-	// Fungsi untuk menampilkan produk
+			return acc;
+		}, {});
+
+		// Cek apakah kunci rahasia sesuai
+		let links = window.location.href.split('?')[1];
+		if (links != secretKey) {
+			window.location.href = "/kolpri/";
+		}
+
+		// Fungsi untuk menampilkan produk
 		function displayProducts(products) {
 			let productLists = products[titlePage.toUpperCase()];
 			let productDiv;
@@ -64,27 +69,32 @@ return acc;
 			productLists.sort(() => Math.random() - 0.5);
 			
 			productLists.forEach((product) => {
-			productDiv = document.getElementById(product.category);
-			const productElement = document.createElement('div');
-			productElement.className = 'col-md-4';
+				productDiv = document.getElementById(product.category);
+				const productElement = document.createElement('div');
+				productElement.className = 'col-md-4';
 
-			productElement.innerHTML = `
-						<div class="card mb-4">
-							<img src="https://raw.githubusercontent.com/bangranggas/webby/main/test/${product.image}.png" class="card-img-top" alt="${product.name}">
-							<div class="card-body">
-								<h5 class="card-title">${product.name}</h5>
-								<p class="card-text">${product.description}</p>
-								<a href="${product.link}" target="_blank" class="btn btn-primary">Visit Now</a>
-							</div>
+				productElement.innerHTML = `
+					<div class="card mb-4">
+						<img src="https://raw.githubusercontent.com/bangranggas/webby/main/test/${product.image}.png" class="card-img-top" alt="${product.name}">
+						<div class="card-body">
+							<h5 class="card-title">${product.name}</h5>
+							<p class="card-text">${product.description}</p>
+							<a href="${product.link}" target="_blank" class="btn btn-primary">Visit Now</a>
 						</div>
-					`;
-			productDiv.appendChild(productElement);		  
-        })
-      } 
-	  
-	  if (titlePage != "Home") {
-		displayProducts(categorizedData);
-	  }
+					</div>
+				`;
+				productDiv.appendChild(productElement);		  
+			})
+		}
+
+		// Tampilkan produk jika titlePage bukan Home
+		if (titlePage !== "Home") {
+			displayProducts(categorizedData);
+		}
+	}
+
+	// Panggil fungsi fetchAndDisplayProducts
+	fetchAndDisplayProducts();
 	</script>
 	<script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
