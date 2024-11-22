@@ -1,6 +1,5 @@
 ---
 const secretInfo = ["admin", "minecraftbuilder"]
-const secretKey = "?anjaygaming"
 ---
 <!doctype html>
 <html lang="en">
@@ -54,9 +53,39 @@ const secretKey = "?anjaygaming"
         </button>
       </div>
     </div>
-    <script define:vars={{ secretKey, secretInfo }}>
-	const element = document.getElementById("myBtn");
-	element.addEventListener("click", login);
+    <script define:vars={{ secretInfo }}>
+      // Buat cookies utk informasi login
+      function createCookieIfNotExists() {
+          // Mengecek apakah cookie sudah ada
+          if (!getCookie("secretKey")) {
+              let randomNumber = Math.floor(Math.random() * 10000);
+              
+              // Menetapkan waktu kedaluwarsa cookie
+              let expires = new Date();
+              expires.setTime(expires.getTime() + (30 * 60 * 1000));
+              
+              // Menyimpan cookie dengan nama "randomNumber" dan nilai random number
+              document.cookie = "secretKey=" + randomNumber + "; expires=" + expires.toUTCString() + "; path=/";
+              console.log("Cookie created !");
+          } else {
+              console.log("Cookie already exists !");
+          }
+      }
+
+      function getCookie(name) {
+          let decodedCookies = decodeURIComponent(document.cookie);
+          let cookiesArray = decodedCookies.split(';');
+          for (let i = 0; i < cookiesArray.length; i++) {
+              let cookie = cookiesArray[i].trim();
+              if (cookie.indexOf(name + "=") === 0) {
+                  return cookie.substring(name.length + 1);
+              }
+          }
+          return "";
+      }
+
+      const element = document.getElementById("myBtn");
+      element.addEventListener("click", login);
       function login() {
         // Get the values from the input fields
         const username = document.getElementById("username").value
@@ -64,7 +93,9 @@ const secretKey = "?anjaygaming"
 
         // Simple validation logic (this can be replaced with real validation)
         if (username === secretInfo[0] && password === secretInfo[1]) {
-			window.location.href = "/kolpri/home"+secretKey;
+      // Memanggil fungsi untuk membuat cookie jika belum ada
+      createCookieIfNotExists();
+			window.location.href = "/kolpri/home?"+getCookie("secretKey");
         } else {
 			document.getElementById("error-message").textContent = "Invalid username or password!";
         }

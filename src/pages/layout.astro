@@ -2,7 +2,6 @@
 import Navbar from "../components/navbar.astro"
 import Title from "../components/title.astro"
 
-const secretKey = "anjaygaming"
 const {active, titlePage, titleColor, hideTitle} = Astro.props
 ---
 <html lang="en">
@@ -27,7 +26,7 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 			<!-- konten dari luar -->
 		</slot>
 
-	<script type="module" define:vars={{ titlePage, secretKey }}>
+	<script type="module" define:vars={{ titlePage }}>
 	async function fetchAndDisplayProducts() {
 		// Mengambil data dari API
 		const timestamp = new Date().getTime();
@@ -56,9 +55,24 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 			return acc;
 		}, {});
 
+		// Fungsi untuk mendapatkan nilai cookie berdasarkan nama
+		function getCookie(name) {
+			let decodedCookies = decodeURIComponent(document.cookie);
+			let cookiesArray = decodedCookies.split(';');
+			for (let i = 0; i < cookiesArray.length; i++) {
+				let cookie = cookiesArray[i].trim();
+				if (cookie.indexOf(name + "=") === 0) {
+					return cookie.substring(name.length + 1);
+				}
+			}
+			return "";
+		}
+
 		// Cek apakah kunci rahasia sesuai
 		let links = window.location.href.split('?')[1];
-		if (links != secretKey) {
+		if (!getCookie("secretKey")) {
+			window.location.href = "/kolpri/";
+		} else if (links != getCookie("secretKey")) {
 			window.location.href = "/kolpri/";
 		}
 
@@ -73,14 +87,15 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 			productLists.forEach((product) => {
 				productDiv = document.getElementById(product.category);
 				const productElement = document.createElement('div');
+				const hostname = new URL(product.link).hostname;
 				productElement.className = 'col-md-4';
 
 				productElement.innerHTML = `
 					<div class="card mb-4">
-						<img src="https://raw.githubusercontent.com/bangranggas/webby/main/test/${product.image}.png" class="card-img-top" alt="${product.name}">
+						<img src="https://raw.githubusercontent.com/bangranggas/webby/main/test/${product.image}.png" class="card-img-top" loading="lazy" alt="${product.name}">
 						<div class="card-body">
 							<h5 class="card-title">${product.name}</h5>
-							<p class="card-text">${product.description}</p>
+							<p class="card-text">Host Web : ${hostname}</p>
 							<a href="${product.link}" target="_blank" class="btn btn-primary">Visit Now</a>
 						</div>
 					</div>

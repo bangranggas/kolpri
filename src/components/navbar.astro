@@ -1,6 +1,5 @@
 ---
 const {whoActive} = Astro.props
-const secretKey = "?anjaygaming"
 let [active1, active2, active3, active4, active5, active6, active7, active8, active9] = new Array(9).fill("nav-link");
 
 if (whoActive == "home") {
@@ -49,49 +48,80 @@ if (whoActive == "home") {
         <div class="navbar-nav">
           <a
             class={active1}
-            href=`/kolpri/home${secretKey}`
+            href=`/kolpri/home`
             >Home</a
           >
           <a
             class={active2}
-            href=`/kolpri/kategori1${secretKey}`
+            href=`/kolpri/kategori1`
             >Showoff</a
           >
           <a
             class={active3}
-            href=`/kolpri/kategori2${secretKey}`
+            href=`/kolpri/kategori2`
             >Nyep***</a
           >
           <a
             class={active4}
-            href=`/kolpri/kategori3${secretKey}`
+            href=`/kolpri/kategori3`
             >Ngew*</a
           >
           <a
             class={active5}
-            href=`/kolpri/kategori4${secretKey}`
+            href=`/kolpri/kategori4`
             >Pack</a
           >
           <a
             class={active6}
-            href=`/kolpri/kategori5${secretKey}`
+            href=`/kolpri/kategori5`
             >Vira*</a
           >
           <a
             class={active7}
-            href=`/kolpri/kategori6${secretKey}`
+            href=`/kolpri/kategori6`
             >Colm*</a
           >
           <a
             class={active8}
-            href=`/kolpri/kategori7${secretKey}`
+            href=`/kolpri/kategori7`
             >Foto</a
           >
           <a
             class={active9}
-            href=`/kolpri/video${secretKey}`
+            href=`/kolpri/video`
             >Video</a>
         </div>
       </div>
     </div>
   </nav>
+
+  <script>
+    // Fungsi untuk mendapatkan nilai cookie berdasarkan nama
+    function getCookie(name) {
+      let decodedCookies = decodeURIComponent(document.cookie);
+      let cookiesArray = decodedCookies.split(';');
+      for (let i = 0; i < cookiesArray.length; i++) {
+        let cookie = cookiesArray[i].trim();
+        if (cookie.indexOf(name + "=") === 0) {
+          return cookie.substring(name.length + 1);
+        }
+      }
+      return "";
+    }
+  
+    // Menambahkan event listener ke semua tautan untuk menambahkan parameter dari cookie
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function(event) {
+        // Mengambil nilai cookie 'secretKey'
+        let secretKey = getCookie('secretKey');
+  
+        // Memeriksa apakah cookie 'secretKey' ada
+        if (secretKey) {
+          // Mengubah href untuk menambahkan query string ?secretKey=nilai
+          let url = this.getAttribute('href');
+          // Menambahkan parameter ke URL jika belum ada query string, atau menambahkannya setelah ?
+          this.setAttribute('href', url + '?' + secretKey);
+        }
+      });
+    });
+  </script>

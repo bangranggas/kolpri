@@ -1,11 +1,10 @@
 ---
-const secretKey = "?anjaygaming"
 ---
 
 <div class="container">
     <div class="list-group pb-4">
       <a
-        href=`/kolpri/kategori1${secretKey}`
+        href=`/kolpri/kategori1`
         class="list-group-item list-group-item-action"
         aria-current="true"
       >
@@ -15,7 +14,7 @@ const secretKey = "?anjaygaming"
         <p class="mb-1">Hanya menunjukan badan.</p>
       </a>
       <a
-        href=`/kolpri/kategori2${secretKey}`
+        href=`/kolpri/kategori2`
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -24,7 +23,7 @@ const secretKey = "?anjaygaming"
         <p class="mb-1">Hisap.</p>
       </a>
       <a
-        href=`/kolpri/kategori3${secretKey}`
+        href=`/kolpri/kategori3`
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -33,7 +32,7 @@ const secretKey = "?anjaygaming"
         <p class="mb-1">Masukkin ke badan.</p>
       </a>
       <a
-        href=`/kolpri/kategori4${secretKey}`
+        href=`/kolpri/kategori4`
         class="list-group-item list-group-item-action"
         aria-current="true"
       >
@@ -43,7 +42,7 @@ const secretKey = "?anjaygaming"
         <p class="mb-1">Ada dua pack.</p>
       </a>
       <a
-        href=`/kolpri/kategori5${secretKey}`
+        href=`/kolpri/kategori5`
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -52,7 +51,7 @@ const secretKey = "?anjaygaming"
         <p class="mb-1">Yang sempet trend.</p>
       </a>
       <a
-        href=`/kolpri/kategori6${secretKey}`
+        href=`/kolpri/kategori6`
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -61,7 +60,7 @@ const secretKey = "?anjaygaming"
         <p class="mb-1">Main sendiri.</p>
       </a>
       <a
-        href=`/kolpri/kategori7${secretKey}`
+        href=`/kolpri/kategori7`
         class="list-group-item list-group-item-action"
       >
         <div class="d-flex w-100 justify-content-between">
@@ -71,3 +70,34 @@ const secretKey = "?anjaygaming"
       </a>
     </div>
 </div>
+
+<script>
+  // Fungsi untuk mendapatkan nilai cookie berdasarkan nama
+  function getCookie(name) {
+    let decodedCookies = decodeURIComponent(document.cookie);
+    let cookiesArray = decodedCookies.split(';');
+    for (let i = 0; i < cookiesArray.length; i++) {
+      let cookie = cookiesArray[i].trim();
+      if (cookie.indexOf(name + "=") === 0) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return "";
+  }
+
+  // Menambahkan event listener ke semua tautan untuk menambahkan parameter dari cookie
+  document.querySelectorAll('.list-group-item-action').forEach(link => {
+    link.addEventListener('click', function(event) {
+      // Mengambil nilai cookie 'secretKey'
+      let secretKey = getCookie('secretKey');
+
+      // Memeriksa apakah cookie 'secretKey' ada
+      if (secretKey) {
+        // Mengubah href untuk menambahkan query string ?secretKey=nilai
+        let url = this.getAttribute('href');
+        // Menambahkan parameter ke URL jika belum ada query string, atau menambahkannya setelah ?
+        this.setAttribute('href', url + '?' + secretKey);
+      }
+    });
+  });
+</script>
