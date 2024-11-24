@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,17 +21,28 @@
     
     <script>
         let links = window.location.href.split('#')[1].split(";");
-        links.forEach((p, index) =>{
+        let linkCounter = 1;
+        links.forEach((p, index) => {
             const listDiv = document.getElementById("productDiv");
-            const listElement = document.createElement("div")
-            const hostname = new URL(p).hostname;
-    
-            listElement.innerHTML = `
-                <a href="${p}" target="_blank" class="list-group-item list-group-item-action">Link ${index+1} : ${hostname}</a>
-            `
+            const listElement = document.createElement("div");
+
+            if (p.startsWith("!")) {
+                // Jika teks diawali dengan "!", tambahkan sebagai <p>
+                const cleanText = decodeURIComponent(p.substring(1)); // Menghapus %20 dan mengganti dengan spasi
+                listElement.innerHTML = `
+                    <a class="list-group-item" style="margin-top: 10px;"><b>${cleanText}</b></a>
+                `;
+            } else {
+                // Jika bukan, tambahkan sebagai <a>
+                const hostname = new URL(p).hostname;
+                listElement.innerHTML = `
+                    <a href="${p}" target="_blank" class="list-group-item list-group-item-action">Link ${linkCounter} : ${hostname}</a>
+                `;
+                linkCounter++;
+            }
+
             listDiv.appendChild(listElement);
-        })
-    
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
