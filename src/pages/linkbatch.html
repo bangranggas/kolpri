@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Buka Batch Link</title>
+  </head>
+  <body>
+    <h1>Buka Batch Link</h1>
+    <textarea
+      id="linkList"
+      rows="10"
+      cols="50"
+      placeholder="Masukkan satu link per baris"
+    ></textarea
+    ><br /><br />
+    <button id="openLinks">Buka Semua Link</button>
+    <div
+      id="log"
+      style="margin-top: 20px; color: red"
+    ></div>
+
+    <script>
+      document.getElementById('openLinks').addEventListener('click', function () {
+        // Ambil teks dari textarea
+        const linkText = document.getElementById('linkList').value;
+
+        // Pisahkan setiap baris menjadi array
+        const links = linkText
+          .split('\n')
+          .map((link) => link.trim())
+          .filter((link) => link !== '');
+
+        // Regex untuk validasi URL
+        const urlRegex = /^(https?:\/\/)?([\w\-]+\.)+[\w\-]{2,}(\/[\w\-./?%&=]*)?$/i;
+
+        // Area log untuk link yang tidak valid
+        const logArea = document.getElementById('log');
+        logArea.innerHTML = ''; // Bersihkan log sebelumnya
+
+        // Loop melalui array dan buka setiap link yang valid
+        links.forEach((link) => {
+          if (!urlRegex.test(link)) {
+            // Tambahkan pesan ke log untuk link yang tidak valid
+            logArea.innerHTML += `<div>'${link}' bukan link yang valid.</div>`;
+            return; // Lewati link yang tidak valid
+          }
+
+          // Tambahkan http:// jika link tidak memiliki protokol
+          if (!/^https?:\/\//i.test(link)) {
+            link = 'http://' + link;
+          }
+
+          // Buka link di tab baru
+          window.open(link, '_blank');
+        });
+      });
+    </script>
+  </body>
+</html>
