@@ -1,6 +1,6 @@
 ---
 const {whoActive} = Astro.props
-let [active1, active2, active3, active4, active5, active6, active7, active8, active9, active10] = new Array(10).fill("nav-link");
+let [active1, active2, active3, active4, active5, active6, active7, active8, active9, active10, active11] = new Array(11).fill("nav-link");
 
 if (whoActive == "home") {
     active1 = "nav-link active"
@@ -22,6 +22,8 @@ if (whoActive == "home") {
     active9 = "nav-link active"
 } else if (whoActive == "linkbatch") {
     active10 = "nav-link active"
+}  else if (whoActive == "search") {
+    active11 = "nav-link active"
 }
 ---
 
@@ -88,6 +90,10 @@ if (whoActive == "home") {
             href=`/kolpri/kategori7`
             >Foto</a
           >
+          <a
+            class={active11}
+            href=`/kolpri/search`
+            >Search</a>
           <a
             class={active9}
             href=`/kolpri/video`

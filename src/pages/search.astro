@@ -1,0 +1,28 @@
+---
+import Layout from "./layout.astro";
+---
+
+<Layout  active="search" titlePage="Search" titleColor="primary">
+    <div class="container mt-4">
+        <!-- <div class="d-flex align-items-center justify-content-center">
+            <input type="text" id="searchInput" placeholder="Search by name...">
+        <button id="searchBtn">Search</button>
+        </div> -->
+
+        <div class="input-group mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name..." aria-label="Search by name" aria-describedby="searchBtn">
+            <button class="btn btn-outline-secondary" type="button" id="searchBtn">Search</button>
+          </div>
+
+        <div id="results" class="row"></div>
+    </div>
+    <script>
+        // Jalankan fungsi enter
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("searchBtn").click();
+            }
+        });
+    </script>
+</Layout>

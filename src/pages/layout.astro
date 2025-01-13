@@ -27,11 +27,12 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 		</slot>
 
 	<script type="module" define:vars={{ titlePage }}>
+	let result = [];
 	async function fetchAndDisplayProducts() {
 		// Mengambil data dari API
 		const timestamp = new Date().getTime();
 		const response = await fetch(`https://raw.githubusercontent.com/bangranggas/webby/refs/heads/main/data/data.json?timestamp=${timestamp}`);
-		const result = await response.json();
+		result = await response.json();
 		console.log(timestamp)
 
 		// Mengelompokkan data berdasarkan kategori
@@ -76,6 +77,37 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 			window.location.href = "/kolpri/";
 		}
 
+		// Function to search and display data
+		function searchData() {
+			const query = document.getElementById('searchInput').value.toLowerCase();
+			const results = document.getElementById('results');
+			results.innerHTML = '';
+
+			const filteredData = result.filter(item => item.name.toLowerCase().includes(query));
+
+				if (filteredData.length > 0) {
+					filteredData.forEach(item => {
+					const card = document.createElement('div');
+					card.className = 'col-md-4';
+
+					card.innerHTML = `
+						<div class="card mb-4">
+						<img src="https://raw.githubusercontent.com/bangranggas/webby/main/test/${item.image}.png" class="card-img-top" loading="lazy" alt="${item.name}">
+						<div class="card-body">
+							<h5 class="card-title">${item.name}</h5>
+							<p class="card-text">Host Web : ${new URL(item.link).hostname}</p>
+							<a href="${item.link}" target="_blank" class="btn btn-primary">Visit Now</a>
+						</div>
+					</div>
+					`;
+
+					results.appendChild(card);
+					});
+				} else {
+					results.innerHTML = '<p>No results found.</p>';
+				}
+		}
+
 		// Fungsi untuk menampilkan produk
 		function displayProducts(products) {
 			let productLists = products[titlePage.toUpperCase()];
@@ -105,8 +137,13 @@ const {active, titlePage, titleColor, hideTitle} = Astro.props
 		}
 
 		// Tampilkan produk jika titlePage bukan Home
-		if (titlePage !== "Home") {
+		if (titlePage != "Home" & titlePage != "Search") {
 			displayProducts(categorizedData);
+		}
+		if (titlePage == "Search") {
+			document.getElementById("searchBtn").addEventListener("click", function() {
+				searchData();
+			});
 		}
 	}
 
